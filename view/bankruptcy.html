@@ -1,0 +1,24 @@
+{% include('header.html') %}
+<main class="mdl-layout__content mdl-color--grey-100">
+	<div class="mdl-grid hash-content">
+		<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="align-items: center; flex-direction: column;">
+		<p>Hey friend, looks like you are down on your luck.</p>
+		<p>Don't feel bad. Everyone makes mistakes, it's how we learn and grow.</p>
+		<p>Going through with the steps on this page will reset your account to
+			the day you first registered. A fresh start; a clean slate.</p>
+		<p>All trades, research points and investments will be deleted and
+		your cash will be reset to $100.00 but the rest is up to you.</p>
+		<p>Type in "RESETALL" in the box below if you understand.</p>
+		</div>
+		<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="place-content: center;">
+		<form method="post" action="{{ home }}bankruptcy/">
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label block">
+					<input class="mdl-textfield__input" type="text" name="confirm" size="20" autofocus/>
+					<label class="mdl-textfield__label" for="action">Type to confirm...</label>
+				</div>
+			<input class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--red mdl-color-text--red-50" type="submit" name="action" value="RESET EVERYTHING" />
+		</form>
+	</div>
+	</div>
+</main>
+	{% include('footer.html') %}

@@ -1,0 +1,26 @@
+{% include('header.html') %}
+<main class="mdl-layout__content mdl-color--grey-100">
+	<div class="mdl-grid hash-content">
+		<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="align-items: center; flex-direction: column;">
+		<p>I don't think you understand.</p>
+		<p>We aren't kidding around here.</p>
+		<p>Dispite this page's friendly demeanor nothing you see should be taken lightly!</p>
+		<p>Like a hacker with the CIA at his door, all traces of you will be deleted and
+		your cash will be set back to $100.00</p>
+		<p>Type in "RESETALL" exactly as you see it, without the quotes in the box
+			below if you understand.</p>
+		<p>We won't help you until you if you don't understand.</p>
+		</div>
+		<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="place-content: center;">
+		<form method="post" action="{{ home }}bankruptcy/">
+			<input hidden type="text" name="idiot" value="true"/>
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label block">
+					<input class="mdl-textfield__input" type="text" name="confirm" size="20" autofocus/>
+					<label class="mdl-textfield__label" for="action">CLEARLY TYPE TO CONFIRM...</label>
+				</div>
+			<input class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--red mdl-color-text--red-50" type="submit" name="action" value="RESET LITERALLY EVERYTHING" />
+		</form>
+	</div>
+	</div>
+</main>
+{% include('footer.html') %}

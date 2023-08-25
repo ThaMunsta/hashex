@@ -1,0 +1,23 @@
+{% include('header.html') %}
+<main class="mdl-layout__content mdl-color--grey-100">
+	<div class="mdl-grid hash-content">
+		<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="align-items: center; flex-direction: column;">
+		<p>Listen, I don't think this is going to work.</p>
+		<p>If you can figure out what to do here we will do the thing we said before.</p>
+	</div>
+	<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="place-content: center;">
+	<form method="post" action="{{ home }}bankruptcy/">
+		<input hidden type="text" name="idiot" value="true"/>
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label block">
+				<input class="mdl-textfield__input" type="text" name="confirm" size="20" value="dumb" autofocus/>
+				<label class="mdl-textfield__label" for="action">You are...</label>
+			</div>
+		<input class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--red mdl-color-text--red-50" type="submit" name="action" value="whatever" />
+	</form>
+</div>
+<div class="mdl-cell mdl-cell--12-col mdl-grid" style="place-content: center;">
+		<a href=''>HELP, I forget what to do and/or I miss the friendlier page</a>
+	</div>
+	</div>
+	</main>
+	{% include('footer.html') %}
