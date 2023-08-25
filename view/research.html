@@ -1,0 +1,48 @@
+{% include('header.html') %}
+<main class="mdl-layout__content mdl-color--grey-100">
+	<div class="mdl-grid hash-content">
+			<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid" style="align-items: center; flex-direction: column;">
+				{% if points %}Next research point available {{ points.available | time2str }}<br>{% endif %}
+				{% if available.count > 0 %}
+					{% if available.count > 1 %}
+					You have {{ available.count }} research points available!<br>
+					{% else %}
+					You have a research point!<br>
+					{% endif %}
+					<form method="post" action="{{ home }}search/">
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label block">
+						<input class="mdl-textfield__input" type="text" id="hash" name="hash" size="15" autofocus>
+						<label class="mdl-textfield__label" for="hash">Hash Search...</label>
+					</div>
+					{% if errMsg %}
+					<p class="errMsg">{{ errMsg }}</p>
+					{% endif %}
+					<input class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit" name="action" value="Research" />
+				</form>
+				{% endif %}
+			</div>
+
+			<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid" style="place-content: center;">
+			{% if pending %}
+			<h4>Pending research:</h4>
+			<div class="mdl-card__actions mdl-card--border">
+			{% for row in pending %}
+				<p><a href="{{ home }}trade/{{ row.hash }}">#{{ row.hash }}</a> || Available {{ row.active | time2str }}</p>
+			{% endfor %}
+			</div>
+			{% endif %}
+			{% if complete %}
+			<h4>Completed research</h4>
+			<div class="mdl-card__actions mdl-card--border">
+			{% for row in complete %}
+				<p><a href="{{ home }}trade/{{ row.hash }}">#{{ row.hash }}</a> || Finished {{ row.redeemed | time2str }}</p>
+			{% endfor %}
+			</div>
+			{% endif %}
+			{% if not pending and not complete %}
+			<h4>No research in progress or complete</h4>
+			{% endif %}
+		</div>
+	</div>
+	</main>
+	{% include('footer.html') %}

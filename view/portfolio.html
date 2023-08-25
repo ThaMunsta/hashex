@@ -1,0 +1,116 @@
+{% include('header.html') %}
+      <main class="mdl-layout__content mdl-color--grey-100">
+        <div class="mdl-grid hash-content">
+          <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+						{% if dataPoints %}
+							{% include('graph.user.html') %}
+              {% else %}
+              Your historic networth graph will appear here once you have some history. This is normal for new players. Check out the trading page while you wait!
+						{% endif %}
+          </div>
+					<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-grid" style="place-content: center;">
+						Net Worth: ${{ user.worth|number_format(2, '.', ',')}}
+					</div>
+					<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-grid" style="place-content: center;">
+						Invested: ${{ user.total_invested|number_format(2, '.', ',') }}
+					</div>
+					<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-grid" style="place-content: center;">
+						Cash: ${{ user.cash|number_format(2, '.', ',') }}
+					</div>
+        <div class="hash-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--12-col">
+						{% if user.worth < '2' %}
+            <p>
+  						You currently have a low net worth. If you think your stock
+  						situation will improve - our fingers are crossed!
+  						Otherwise you can just start over and hopefully learn from your mistakes.
+  						<br>
+  						<input class="mdl-button mdl-js-button mdl-button--raised mdl-color--red" type="submit" name="action" value="Bankruptcy" style="color: #fff;" onclick="window.location.href = '{{ home }}bankruptcy';">
+            </p>
+						{% endif %}
+					{% if pending %}
+					<p>
+						Pending trades:<br>
+						{% for row in pending %}
+							<a href="{{ home }}trade/{{ row.name }}">#{{ row.name }}</a> {{ row.volume }} shares {{ row.type }} @ ${{ row.value }}<br>
+						{% endfor %}
+					</p>
+					{% endif %}
+					{% if long %}
+					<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+			  <caption>Investments - Long</caption>
+			  <thead>
+			    <tr>
+						<th class="mdl-data-table__cell--non-numeric" scope="col">Hash</th>
+						<th scope="col">Shares</th>
+						<th scope="col">Avg Paid</th>
+						<th scope="col">Current</th>
+						<th scope="col">Value</th>
+						<th scope="col">Net Gain/Loss</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			  	{% for row in long %}
+			    <tr>
+			      <td class="mdl-data-table__cell--non-numeric" data-label="Hash"><a href="{{ home }}trade/{{ row.name }}">#{{ row.name }}</a></td>
+						<td data-label="Shares">{{ row.total_volume }}</td>
+						<td data-label="Avg Paid">${{ row.avg_paid|number_format(2, '.', ',') }}</td>
+						<td data-label="Current">${{ row.current_value|number_format(2, '.', ',') }}</td>
+						<td data-label="Value">${{ (row.current_value * row.total_volume)|number_format(2, '.', ',') }}</td>
+						{% if row.gainloss > 0 %}
+						<td data-label="Net Gain/Loss" class="joyMsg"><i class="far fa-arrow-alt-circle-up"></i>
+						{% elseif row.gainloss < 0 %}
+						<td data-label="Net Gain/Loss" class="errMsg"><i class="far fa-arrow-alt-circle-down"></i>
+						{% else %}
+						<td data-label="Net Gain/Loss"><i class="fas fa-minus-circle"></i>
+						{% endif %}
+							${{ row.gainloss|number_format(2, '.', ',') }}
+						</td>
+			    </tr>
+			    {% endfor %}
+			  </tbody>
+			</table>
+			</div>
+			{% endif %}
+			{% if short %}
+			<div class="hash-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--12-col">
+			<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+			<caption>Investments - Short</caption>
+			<thead>
+			<tr>
+				<th class="mdl-data-table__cell--non-numeric" scope="col">Hash</th>
+				<th scope="col">Shares</th>
+				<th scope="col">Avg Paid</th>
+				<th scope="col">Current</th>
+				<th scope="col">Value</th>
+				<th scope="col">Net Gain/Loss</th>
+			</tr>
+			</thead>
+			<tbody>
+			{% for row in short %}
+			<tr>
+				<td class="mdl-data-table__cell--non-numeric" data-label="Hash"><a href="{{ home }}trade/{{ row.name }}">#{{ row.name }}</a></td>
+				<td data-label="Shares">{{ row.total_volume }}</td>
+				<td data-label="Avg Paid">${{ row.avg_paid|number_format(2, '.', ',') }}</td>
+				<td data-label="Current">${{ row.current_value|number_format(2, '.', ',') }}</td>
+				<td data-label="Value">${{ (row.current_value * row.total_volume)|number_format(2, '.', ',') }}</td>
+				{% if row.gainloss > 0 %}
+				<td data-label="Net Gain/Loss" class="joyMsg"><i class="far fa-arrow-alt-circle-up"></i>
+				{% elseif row.gainloss < 0 %}
+				<td data-label="Net Gain/Loss" class="errMsg"><i class="far fa-arrow-alt-circle-down"></i>
+				{% else %}
+				<td data-label="Net Gain/Loss"><i class="fas fa-minus-circle"></i>
+				{% endif %}
+					${{ row.gainloss|number_format(2, '.', ',') }}
+				</td>
+			</tr>
+			{% endfor %}
+			</tbody>
+			</table>
+			{% endif %}
+			{% if not short and not long %}
+			When you have investments all held stocks will show here!
+			{% endif %}
+        </div>
+			</div>
+      </main>
+	{% include('footer.html') %}

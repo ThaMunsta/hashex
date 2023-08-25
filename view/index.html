@@ -1,0 +1,23 @@
+{% include('header.html') %}
+      <main class="mdl-layout__content mdl-color--grey-100">
+        <div class="mdl-grid hash-content">
+          <h4 class="mdl-cell mdl-cell--12-col mdl-grid">Welcome!</h4>
+          <div class="hash-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+            <p class="mdl-card__supporting-text">Use fake HashCash to invest in real trending hashtags.
+              Hashtag price depends on the number of tweets within the last hour.</p>
+              {% if auth %}
+              <div class="mdl-card__actions mdl-card--border">
+                <a href="{{ home }}trade" class="mdl-button">Invest</a>
+                <a href="{{ home }}research" class="mdl-button">Plan</a>
+                <a href="{{ home }}leaderboard" class="mdl-button">Compare</a>
+              </div>
+              {% else %}
+              <div class="mdl-card__actions mdl-card--border">
+                <a href="{{ home }}login" class="mdl-button">Login</a>
+                <a href="{{ home }}register" class="mdl-button">Register</a>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </main>
+{% include('footer.html') %}

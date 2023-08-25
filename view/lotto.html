@@ -1,0 +1,18 @@
+{% include('header.html') %}
+<main class="mdl-layout__content mdl-color--grey-100">
+	<div class="mdl-grid hash-content">
+		<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+		{% if errMsg %} {{ errMsg|raw }}
+			{% else %}
+		{% if lotto.worth %}
+			<h3>Jackpot worth {{ lotto.worth }} points today!</h3>
+			{{ boxes|raw }}
+			{% else %}
+			Doesn't look like the jackpot is ready today. Try again {% if next.strtime %}<b>{{ next.strtime }}</b>{% else %}later!{% endif %}
+		{% endif %}
+	{% endif %}
+		<br>
+	</div>
+</div>
+</main>
+{% include('footer.html') %}

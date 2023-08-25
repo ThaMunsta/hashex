@@ -1,0 +1,95 @@
+{% include('header.html') %}
+<main class="mdl-layout__content mdl-color--grey-100">
+	<div class="mdl-grid hash-content">
+		<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="place-content: center;">
+	{% if joyMsg %}
+	<p class="joyMsg">{{ joyMsg }}</p>
+	{% endif %}
+	{% if dataPoints %}
+		{% include('graph.hash.html') %}
+	{% endif %}
+</div>
+<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid" style="place-content: center;">
+	Current value: {{ hashDetail.value }}
+</div>
+<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid" style="place-content: center;">
+	Last updated: {{ hashDetail.last_update | time2str }}
+</div>
+<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--3-col mdl-grid" style="place-content: center;">
+	Historic Values<br>
+	Last 1 hour<br>
+	Last 24 hours<br>
+	Last 7 Days
+</div>
+<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--3-col mdl-grid" style="place-content: center;">
+	Min (Delta)<br>
+	{{ min.hour.value }} ({{ hashDetail.value - min.hour.value }})<br>
+	{{ min.day.value }} ({{ hashDetail.value - min.day.value }})<br>
+	{{ min.week.value }} ({{ hashDetail.value - min.week.value }})
+</div>
+<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--3-col mdl-grid" style="place-content: center;">
+	Average (Delta)<br>
+	{{ avg.hour.value }} ({{ hashDetail.value - avg.hour.value }})<br>
+	{{ avg.day.value }} ({{ hashDetail.value - avg.day.value }})<br>
+	{{ avg.week.value }} ({{ hashDetail.value - avg.week.value }})
+</div>
+<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--3-col mdl-grid" style="place-content: center;">
+	Max (Delta)<br>
+	{{ max.hour.value }} ({{ hashDetail.value - max.hour.value }})<br>
+	{{ max.day.value }} ({{ hashDetail.value - max.day.value }})<br>
+	{{ max.week.value }} ({{ hashDetail.value - max.week.value }})
+</div>
+<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid" style="place-content: center;">
+	<h5>Invest</h5>
+	<div class="mdl-card__actions mdl-card--border">
+		<form class="fill-space" method="post" action="{{ home }}trade/{{ name }}/">
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label block">
+				<input class="mdl-textfield__input" type="number" name="shares" id="shares" max="10000" min="0" size="15">
+				<label class="mdl-textfield__label" for="shares">Shares...</label>
+			</div>
+			<input type="hidden" name="hold" value="true"/>
+			{% if errMsg %}
+			<p class="errMsg">{{ errMsg }}</p>
+			{% endif %}
+			<input class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color-text--blue-50" type="submit" name="action" value="Buy" />
+			<input class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--red mdl-color-text--red-50" type="submit" name="action" value="Short" />
+		</form>
+	</div>
+</div>
+<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid" style="justify-content: center;">
+	<h5>Held</h5>
+	<div class="mdl-card__actions mdl-card--border">
+		{% if long.total_volume > 0 %}
+		<br>
+		<form method="post" action="{{ home }}trade/{{ name }}/">
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label block">
+				<input class="mdl-textfield__input" type="number" type="number" id="long" name="shares" value="{{ long.total_volume }}" max="{{ long.total_volume }}" min="0" size="15">
+				<label class="mdl-textfield__label" for="long">Average Paid: {{ long.avg_paid }}...</label>
+			</div>
+			<input type="hidden" name="release" value="true"/>
+			{% if errMsg %}
+			<p class="errMsg">{{ errMsg }}</p>
+			{% endif %}
+			<input class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--green mdl-color-text--green-50" type="submit" name="action" value="Sell" />
+		</form>
+		{% endif %}
+		{% if short.total_volume > 0 %}
+		<br>
+		<form method="post" action="{{ home }}trade/{{ name }}/">
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label block">
+				<input class="mdl-textfield__input" type="number" id="short" name="shares" value="{{ short.total_volume }}" max="{{ short.total_volume }}" min="0" size="15">
+				<label class="mdl-textfield__label" for="short">Average Paid: {{ short.avg_paid }}...</label>
+			</div>
+			<input type="hidden" name="release" value="true"/>
+			{% if errMsg %}
+			<p class="errMsg">{{ errMsg }}</p>
+			{% endif %}
+			<input class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--green mdl-color-text--green-50" type="submit" name="action" value="Cover" />
+		</form>
+		{% endif %}
+		<br>
+	</div>
+</div>
+</div>
+</main>
+{% include('footer.html') %}

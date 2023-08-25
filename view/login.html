@@ -1,0 +1,34 @@
+{% include('header.html') %}
+			<main class="mdl-layout__content mdl-color--grey-100">
+        <div class="mdl-grid hash-content">
+          <div class="hash-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+						{% if auth %}
+						Success! Welcome and good luck to you {{ username }}!
+						{% else %}
+						{% if lootErr %}<p>{{ lootErr | raw }}</p>{% endif %}
+						If you do not have an account a new one will be created using the information you enter below:
+					</div>
+					<div class="hash-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+					<form class="fill-space" method="post" action="{{ home }}login/">
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label block">
+					    <input class="mdl-textfield__input" type="text" id="user" type="text" name="user" maxlength="28" size="15" autofocus>
+					    <label class="mdl-textfield__label" for="user">Username...</label>
+						</div>
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label block">
+							<input class="mdl-textfield__input" type="password" id="passwd" name="passwd" maxlength="12" size="15">
+					    <label class="mdl-textfield__label" for="passwd">Password...</label>
+					  </div>
+						<input type="hidden" name="login" value="true"/>
+						{% if errMsg %}
+						<p class="errMsg">{{ errMsg }}</p>
+						{% endif %}
+						<input class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit" value="Login/Register" />
+					</form>
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label block">
+						<a href="{{ home }}reset/">Forgot your password?</a>
+					</div>
+					</div>
+						{% endif %}
+          </div>
+      </main>
+		{% include('footer.html') %}

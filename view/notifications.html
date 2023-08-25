@@ -1,0 +1,46 @@
+{% include('header.html') %}
+
+<body>
+	<div class="main">
+		<p>{% if rows %}
+		<table>
+		  <caption>notifications</caption>
+		  <thead>
+		    <tr>
+		      <th scope="col">Seen</th>
+		      <th scope="col">What</th>
+		      <th scope="col">When</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		  	{% for row in rows %}
+		    <tr>
+		      <td data-label="Seen">{% if row.seen == 0 %}<i class="fas fa-envelope"></i> {% else %}<i class="fas fa-envelope-open-text"></i> {% endif %}</td>
+		      <td data-label="What">{{ row.text | raw }}</td>
+		      <td data-label="When">{{ row.createdate|time2str }}</td>
+		    </tr>
+		    {% endfor %}
+		  </tbody>
+		</table>
+		<div id="pager" class="pager">
+		  <form>
+		    <i class="fas fa-fast-backward first"></i>
+		    <i class="fas fa-step-backward prev"></i>
+		    <input readonly type="text" class="pagedisplay"/>
+		    <i class="fas fa-step-forward next"></i>
+		    <i class="fas fa-fast-forward last"></i>
+		    <select class="pagesize">
+		      <option selected="selected"  value="10">10</option>
+		      <option value="20">25</option>
+		      <option value="30">50</option>
+		    </select>
+		  </form>
+		</div>
+		{% else %}
+		No notifications yet.
+		{% endif %}
+		</p>
+		<div class="addthis_inline_follow_toolbox"></div>
+	</div>
+	{% include('footer.html') %}
+</body>

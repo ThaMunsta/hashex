@@ -1,0 +1,52 @@
+{% include('header.html') %}
+<main class="mdl-layout__content mdl-color--grey-100">
+	<div class="mdl-grid hash-content">
+		<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="place-content: center;">
+		<small>Note: This hashtag is inactive. Costs may be estimated or outdated and
+			should be considered inaccurate until researched.</small>
+		{% if errMsg %}
+		<p class="errMsg">{{ errMsg }}</p>
+		{% endif %}
+		{% if dataPoints %}
+			{% include('graph.hash.html') %}
+		{% endif %}
+	{% if long > 0 %}
+	<form method="post" action="{{ home }}trade/{{ name }}/">
+		Quantity: <input class="" type="number" name="shares" value="{{ long }}" max="{{ long }}" min="0" size="15" autofocus/><br>
+		<input type="hidden" name="release" value="true"/>
+		{% if errMsg %}
+		<p class="errMsg">{{ errMsg }}</p>
+		{% endif %}
+		<input class="button-primary" type="submit" name="action" value="Sell" />
+	</form>
+	{% endif %}
+	{% if short > 0 %}
+	<br>
+	<form method="post" action="{{ home }}trade/{{ name }}/">
+		Quantity: <input class="" type="number" name="shares" value="{{ short }}" max="{{ short }}" min="0" size="15" autofocus/><br>
+		<input type="hidden" name="release" value="true"/>
+		{% if errMsg %}
+		<p class="errMsg">{{ errMsg }}</p>
+		{% endif %}
+		<input class="button-primary" type="submit" name="action" value="Cover" />
+	</form>
+	{% endif %}
+	<br>
+</div>
+{% if hashDetail.last_update %}
+<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid" style="place-content: center;">
+		Last known value: {{ hashDetail.value }}
+</div>
+<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid" style="place-content: center;">
+		Last updated: {{ hashDetail.last_update | time2str }}
+</div>
+{% endif %}
+<div class="mdl-cell mdl-cell--12-col mdl-grid" style="place-content: center;">
+	<form method="post" action="{{ home }}trade/{{ name }}/">
+		<input type="hidden" name="research" value="true"/>
+		<input class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit" name="action" value="Use Research Point" />
+	</form>
+</div>
+</div>
+</main>
+{% include('footer.html') %}

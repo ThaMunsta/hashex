@@ -1,0 +1,27 @@
+<script>
+window.onload = function () {
+
+var chart = new CanvasJS.Chart("chartContainer", {
+	theme: "light2", // "light1", "light2", "dark1", "dark2"
+	animationEnabled: true,
+	zoomEnabled: true,
+	title: {
+		text: "Hash Price Over Time"
+	},
+	axisX:{
+        title: "Day",
+    },
+  	axisY: {
+        title: "Price"
+    },
+	data: [{
+		type: "area",
+		xValueType: "dateTime",
+		dataPoints: {{ dataPoints | raw }}
+	}]
+});
+chart.render();
+}
+</script>
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
